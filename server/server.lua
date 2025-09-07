@@ -27,3 +27,9 @@ end)
 RegisterServerEvent('mms-sharewaypoint:server:ShareWaypointWithUser',function(ServerID,MyWaypoint)
     TriggerClientEvent('mms-sharewaypoint:client:SetWaypoint',ServerID,MyWaypoint)
 end)
+
+RegisterServerEvent('mms-sharewaypoint:server:ShareWaypointWithAllUsers',function(ClosestCharacters,MyWaypoint)
+    for h,v in ipairs(ClosestCharacters) do
+        TriggerClientEvent('mms-sharewaypoint:client:SetWaypoint',v.ServerID,MyWaypoint)
+    end
+end)

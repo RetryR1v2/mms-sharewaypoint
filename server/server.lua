@@ -12,7 +12,7 @@ RegisterServerEvent('mms-sharewaypoint:server:GetClosePlayers',function(MyCoords
         local Character = VORPcore.getUser(v).getUsedCharacter
         local Name = Character.firstname .. ' ' .. Character.lastname
         local ServerID = v
-        if Distance <= Config.ShareWaypointRange then
+        if Distance > 0.1 and Distance <= Config.ShareWaypointRange then
             PlayersNear = PlayersNear + 1
             Data = { Name = Name, ServerID = ServerID }
             table.insert(ClosestCharacters,Data)

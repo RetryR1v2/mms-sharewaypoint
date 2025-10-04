@@ -40,6 +40,18 @@ Citizen.CreateThread(function ()
 })
 end)
 
+Citizen.CreateThread(function()
+    local LastWaypoint = DefaultWaypoint
+    while Config.AutoShareWaypoints do
+        Citizen.Wait(1500)
+        local MyCoords = GetEntityCoords(PlayerPedId())
+        local MyWaypoint = GetWaypointCoords()
+        if MyWaypoint ~= DefaultWaypoint and MyWaypoint ~= LastWaypoint then
+            LastWaypoint = MyWaypoint
+            TriggerServerEvent('mms-sharewaypoint:server:GetClosePlayersToAutoshare',MyCoords,MyWaypoint)
+        end
+    end
+end)
 
 RegisterCommand(Config.ShareWaypoint,function()
     local MyWaypoint = GetWaypointCoords()

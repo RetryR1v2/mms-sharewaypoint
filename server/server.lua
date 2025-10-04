@@ -33,3 +33,20 @@ RegisterServerEvent('mms-sharewaypoint:server:ShareWaypointWithAllUsers',functio
         TriggerClientEvent('mms-sharewaypoint:client:SetWaypoint',v.ServerID,MyWaypoint)
     end
 end)
+
+RegisterServerEvent('mms-sharewaypoint:server:GetClosePlayersToAutoshare',function(MyCoords,MyWaypoint)
+    local src = source
+    local PlayersNear = 0
+    for h,v in ipairs(GetPlayers()) do
+        local Ped = GetPlayerPed(v)
+        local Coords = GetEntityCoords(Ped)
+        local Distance = #(Coords - MyCoords)
+        if Distance > 0.1 and Distance <= Config.ShareWaypointRange then
+            PlayersNear = PlayersNear + 1
+            TriggerClientEvent('mms-sharewaypoint:client:SetWaypoint',src,MyWaypoint)
+        end
+    end
+    if PlayersNear == 0 then
+        VORPcore.NotifyRightTip(src,_U('NoOneNear'),5000)
+    end
+end)
